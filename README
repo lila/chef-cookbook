@@ -1,0 +1,6 @@
+README file for chef-cookbook
+
+This is my personal set of chef recipes, ranging from some bioinformatics apps,
+to aws commandline tools to whatever.
+
+feel free to use as you like, no warantee, always in development.

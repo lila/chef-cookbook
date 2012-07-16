@@ -1,0 +1,38 @@
+#!/bin/sh -e
+
+# Starts, stops, and restarts ping
+
+
+export JAVA_HOME=/usr/lib/jvm/jre
+PING_DIR=<%= @ping_install_dir %>
+. /etc/profile.d/ec2-commandline-tools-path.sh
+PLAY=/opt/play/play
+
+case $1 in
+    start)
+        echo "Starting Ping"
+        cd $PING_DIR
+        $PLAY start
+		sleep 10
+		/opt/aws/sns/bin/sns-subscribe <%= @sns_topic %> --endpoint http://<%= @ping_public_ip %>/sns --protocol http
+        ;;
+    stop)
+        echo "Stopping Ping" 
+        cd $PING_DIR
+		/opt/aws/sns/bin/sns-unsubscribe `/opt/aws/sns/bin/sns-list-subscriptions --delimiter ";" | grep <%= @ping_public_ip %> | cut -d ";" -f 1 
+`
+        $PLAY stop
+
+        ;;
+    restart)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
