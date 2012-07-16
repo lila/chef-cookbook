@@ -31,29 +31,27 @@ template "/etc/profile.d/cloudwatch-path.sh" do
   )
 end
 
-template "/opt/aws/cw/credentials.cnf" do
+template "/opt/aws/cloudwatch/credentials.cnf" do
   source "credentials.cnf.erb"
   mode 0755
   owner "root"
   group "root"
   variables(
 	:cw_install_base => node[:cloudwatch_cli][:install_base],
-	:ec2_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir],
-	:sns_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir_sns],
+	:cw_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir],
 	:aws_access_key_id => node[:cloudwatch_cli][:access_key_id],
 	:aws_secret_key_id => node[:cloudwatch_cli][:secret_access_key]
   )
 end
 
-template "/opt/aws/cw/sample.sh" do
+template "/opt/aws/cloudwatch/sample.sh" do
   source "sample.sh.erb"
   mode 0755
   owner "root"
   group "root"
   variables(
 	:cw_install_base => node[:cloudwatch_cli][:install_base],
-	:ec2_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir],
-	:sns_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir_sns],
+	:cw_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir],
 	:aws_access_key_id => node[:cloudwatch_cli][:access_key_id],
 	:aws_secret_key_id => node[:cloudwatch_cli][:secret_access_key]
   )
