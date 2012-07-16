@@ -44,3 +44,21 @@ template "/opt/aws/cw/credentials.cnf" do
 	:aws_secret_key_id => node[:cloudwatch_cli][:secret_access_key]
   )
 end
+
+template "/opt/aws/cw/sample.sh" do
+  source "sample.sh.erb"
+  mode 0755
+  owner "root"
+  group "root"
+  variables(
+	:cw_install_base => node[:cloudwatch_cli][:install_base],
+	:ec2_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir],
+	:sns_install_dir => node[:cloudwatch_cli][:install_base] +"/" + node[:cloudwatch_cli][:install_dir_sns],
+	:aws_access_key_id => node[:cloudwatch_cli][:access_key_id],
+	:aws_secret_key_id => node[:cloudwatch_cli][:secret_access_key]
+  )
+end
+
+cron "sample" do
+  command "/bin/true"
+end

@@ -5,4 +5,5 @@ set_unless[:cloudwatch_cli][:install_base] = "/opt/aws"
 set_unless[:cloudwatch_cli][:install_dir] = "cloudwatch"
 set_unless[:cloudwatch_cli][:user] = "root"
 set_unless[:cloudwatch_cli][:group] = "root"
+set_unless[:cloudwatch_cli][:sample] = "true"
 
